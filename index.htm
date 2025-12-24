@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dorina's Gift Slideshow</title>
+  <style>
+body {
+  background: none;
+}
+    body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    display: none;
+    padding-top: 10px;
+    height: 100%;
+  }
+
+  .active {
+    display: block;
+  }
+
+  h2 {
+    margin-top: 10px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    position: absolute;
+    bottom: 30px;
+  }
+
+  button.prev {
+    left: 30px;
+  }
+
+  button.next {
+    right: 30px;
+  }
+
+  button:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  </style>
+</head>
+<body>
+<div id="slide1" class="slide active">
+    <h2>Adopt Luma the fire fox</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopt the Fox</title>
+  <style>
+    body {
+      background-color: pink;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+    #fox {
+      width: 500px;
+      height: 700px;
+      background-image: url("Fox0_Idle.png");
+      background-size: cover;
+      transition: background-image 0.5s ease-in-out;
+    }
+    .buttons {
+      margin-top: 30px;
+    }
+    .buttons img {
+      width: 80px;
+      height: 80px;
+      margin: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 10px;
+    }
+    .buttons img.used {
+      opacity: 0.5;
+      border-color: gold;
+    }
+    #adopt-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: gold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #pixel-fox {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      pointer-events: none;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="fox"></div>
+  <div class="buttons">
+    <img src="Button1_brush.jpg" id="brush" alt="Brush">
+    <img src="Button2_treat.jpg" id="treat" alt="Treat">
+    <img src="Button3_fire.jpg" id="fire" alt="Fire">
+    <img src="Button4_love.jpg" id="love" alt="Love">
+  </div>
+  <button id="adopt-btn">Adopt Luma the Fox</button>
+  <img src="Fox0_Idle.png" id="pixel-fox" alt="Pixel Fox">
+
+  <script>
+    const fox = document.getElementById('fox');
+    const buttons = document.querySelectorAll('.buttons img');
+    const adoptBtn = document.getElementById('adopt-btn');
+    const pixelFox = document.getElementById('pixel-fox');
+    let clickedStates = new Set();
+
+    const foxStates = {
+      brush: 'Fox1_groomed.png',
+      treat: 'Fox2_fed.png',
+      fire: 'Fox3_fire.png',
+      love: 'Fox4_loved.png'
+    };
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const type = button.id;
+        fox.style.backgroundImage = `url(${foxStates[type]})`;
+        button.classList.add('used');
+        clickedStates.add(type);
+
+        setTimeout(() => {
+          fox.style.backgroundImage = 'url(Fox0_Idle.png)';
+        }, 1500);
+
+        if (clickedStates.size === Object.keys(foxStates).length) {
+          adoptBtn.style.display = 'block';
+        }
+      });
+    });
+
+    adoptBtn.addEventListener('click', () => {
+      pixelFox.style.display = 'block';
+      document.body.addEventListener('mousemove', (e) => {
+        pixelFox.style.left = `${e.pageX + 10}px`;
+        pixelFox.style.top = `${e.pageY + 10}px`;
+      });
+      adoptBtn.disabled = true;
+      adoptBtn.innerText = 'Fox Adopted!';
+    });
+  </script>
+</body>
+</html>
+
+    <div class="nav-buttons">
+<button class="prev" disabled>← Previous</button>
+<button class="next" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+
+
+  <div id="slide2" class="slide" style="">
+<h1>Slide 2  </h1>
+    <div class="nav-buttons">
+    <button class="prev" onclick="prevSlide()">← Previous</button>
+     <button class="next" onclick="nextSlide()">Next →</button>
+
+    </div>
+  </div>
+
+
+  <div id="slide3" class="slide">
+    <h1>Slide 3 </h1>
+
+    <div class="nav-buttons">
+   <button class="prev" onclick="prevSlide()">← Previous</button>
+   <button class="next" disabled>Next →</button>
+
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 3;
+
+    function showSlide(n) {
+      for (let i = 1; i <= totalSlides; i++) {
+        const slide = document.getElementById(`slide${i}`);
+        slide.classList.remove('active');
+      }
+      document.getElementById(`slide${n}`).classList.add('active');
+      currentSlide = n;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+  </script>
+</body>
+</html>
