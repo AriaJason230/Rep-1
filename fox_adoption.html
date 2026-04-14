@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopt the Fox</title>
+  <style>
+    body {
+      background-color: pink;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 90vh;
+      font-family: sans-serif;
+    }
+    #fox {
+      width: 420px;
+      height: 580px;
+      background-image: url("Fox0_Idle.png");
+      background-size: cover;
+      transition: background-image 0.5s ease-in-out;
+    }
+    .buttons {
+      margin-top: 30px;
+    }
+    .buttons img {
+      width: 80px;
+      height: 80px;
+      margin: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 10px;
+    }
+    .buttons img.used {
+      opacity: 0.5;
+      border-color: gold;
+    }
+    #adopt-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: gold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #pixel-fox {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      pointer-events: none;
+      display: none;
+    }
+  </style>
+
+
+<body>
+  <div id="fox"></div>
+  <div class="buttons">
+    <img src="Button1_brush.jpg" id="brush" alt="Brush">
+    <img src="Button2_treat.jpg" id="treat" alt="Treat">
+    <img src="Button3_fire.jpg" id="fire" alt="Fire">
+    <img src="Button4_love.jpg" id="love" alt="Love">
+  </div>
+  <button id="adopt-btn">Adopt Luma!</button>
+  <img id="pixel-fox" src="Fox0_Idle.png" alt="Pixel Fox">
+
+  <script>
+    const fox = document.getElementById('fox');
+    const buttons = document.querySelectorAll('.buttons img');
+    const adoptBtn = document.getElementById('adopt-btn');
+    const pixelFox = document.getElementById('pixel-fox');
+    let clickedStates = new Set();
+
+    const foxStates = {
+      brush: 'Fox1_groomed.png',
+      treat: 'Fox2_fed.png',
+      fire: 'Fox3_fire.png',
+      love: 'Fox4_loved.png'
+    };
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const type = button.id;
+        fox.style.backgroundImage = `url(${foxStates[type]})`;
+        button.classList.add('used');
+        clickedStates.add(type);
+
+        setTimeout(() => {
+          fox.style.backgroundImage = 'url(Fox0_Idle.png)';
+        }, 1500);
+
+        if (clickedStates.size === Object.keys(foxStates).length) {
+          adoptBtn.style.display = 'block';
+        }
+      });
+    });
+
+    adoptBtn.addEventListener('click', () => {
+      pixelFox.style.display = 'block';
+      document.body.addEventListener('mousemove', (e) => {
+        pixelFox.style.left = `${e.pageX + 10}px`;
+        pixelFox.style.top = `${e.pageY + 10}px`;
+      });
+      adoptBtn.disabled = true;
+      adoptBtn.innerText = 'Fox Adopted!';
+    });
+  </script>
+</body>
+</html>
